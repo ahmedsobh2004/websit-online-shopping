@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Page</title>
+  <link rel="stylesheet" href="./css/global.css" />
+  <link rel="stylesheet" href="./css/header.css" />
+  <link
+    rel="shortcut icon"
+    href="./images/bag-shopping-solid.svg"
+    type="image/x-icon"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link rel="stylesheet" href="./css/pages/index.css" />
+  <link rel="stylesheet" href="./css/footer.css" />
+  <style>
+    /* Sidebar styles */
+    main.flex {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 1rem;
+      flex-wrap: wrap;
+    }
+    .sidebar {
+      background: #fefefe;
+      width: 300px;
+      max-width: 90vw;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      padding: 2rem 1.5rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      transition: box-shadow 0.3s ease-in-out;
+    }
+    .sidebar:hover {
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+    .sidebar h2 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #2c3e50;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    #budgetInput {
+      width: 100%;
+      padding: 14px 18px;
+      font-size: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      outline-offset: 2px;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box;
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+      color: #555;
+    }
+    #budgetInput:focus {
+      border-color: #2980b9;
+      box-shadow: 0 0 8px rgba(41, 128, 185, 0.3);
+    }
+    #suggestButton {
+      width: 100%;
+      padding: 14px 0;
+      background-color: #2980b9;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 1px;
+      box-shadow: 0 5px 15px rgba(41, 128, 185, 0.3);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    #suggestButton:hover {
+      background-color: #1c5980;
+      box-shadow: 0 8px 20px rgba(28, 89, 128, 0.5);
+    }
+    .suggestions {
+      margin-top: 2rem;
+      max-height: 400px;
+      overflow-y: auto;
+      border-top: 1px solid #eee;
+      padding-top: 1rem;
+    }
+    .suggestions strong {
+      display: block;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+      font-size: 1.2rem;
+    }
+    .suggestions ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .suggestions ul li {
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      background: #3498db;
+      color: white;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(52, 152, 219, 0.6);
+      cursor: default;
+      transition: background-color 0.3s ease;
+    }
+    .suggestions ul li:hover {
+      background-color: #5dade2;
+    }
+
+    /* Products section styles */
+    .products.flex {
+      flex-grow: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      max-width: 1000px;
+    }
+    .card {
+      width: 266px !important;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s ease;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+    .card:hover {
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+    .card img {
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      width: 100%;
+      object-fit: cover;
+      aspect-ratio: 4 / 3;
+      transition: transform 0.3s ease;
+    }
+    .card:hover img {
+      transform: scale(1.05);
+    }
+    .content {
+      padding: 1rem 1rem 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+    .title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: #2c3e50;
+    }
+    .description {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+      flex-grow: 1;
+    }
+    .flex {
+      display: flex;
+      align-items: center;
+    }
+    .price {
+      font-size: 1.2rem;
+      color: #27ae60;
+      font-weight: 700;
+    }
+    .add-to-cart {
+      background-color: #2980b9;
+      color: white;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      user-select: none;
+      transition: background-color 0.3s ease;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .add-to-cart i {
+      font-size: 1rem;
+    }
+    .add-to-cart:hover {
+      background-color: #1c5980;
+    }
+
+    /* Responsive for mobile */
+    @media only screen and (max-width: 600px) {
+      main.flex {
+        flex-direction: column;
+        align-items: center;
+      }
+      .sidebar {
+        width: 90%;
+        margin-bottom: 2rem;
+        max-width: none;
+      }
+      .products.flex {
+        justify-content: center;
+        gap: 1rem;
+        max-width: 100%;
+      }
+      .card {
+        width: 90% !important;
+      }
+    }
+
+    /* Footer styling */
+    footer {
+      margin-top: 3rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      color: #777;
+      padding: 1rem 0;
+      border-top: 1px solid #eee;
+    }
+    footer span {
+      font-weight: 700;
+      color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-img">
+    <header id="headerElement" class="flex">
+      <div class="logo">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span style="font-weight: bold">AWU</span>
+        <p style="letter-spacing: 0.5px">Shopping</p>
+      </div>
+
+      <div class="links">
+        <a style="position: relative" class="cart" href="./pages/cart.html">
+          <i class="fa-solid fa-cart-shopping"></i>
+          $0.00
+          <span class="products-number">2</span>
+        </a>
+        <a class="sign-in" href="./pages/signin.html">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Sign in</a
+        >
+        <a class="register" href="./pages/register.html">
+          <i class="fa-solid fa-user-plus"></i>
+          Register</a
+        >
+      </div>
+    </header>
+
+    <section class="content">
+      <p class="lifestyle">Lifestyle collection</p>
+      <p class="men">MEN</p>
+      <p class="sale">
+        SALE UP TO <span>30% OFF</span>
+      </p>
+      <p class="free-shipping">Get Free Shipping on orders over $99.00</p>
+      <button>Shop Now</button>
+    </section>
+  </div>
+
+  <main class="flex">
+    <div class="sidebar">
+      <h2>Budget Suggestions</h2>
+      <input type="number" id="budgetInput" placeholder="Enter your budget" min="0" />
+      <button id="suggestButton">Get Suggestions</button>
+      <div class="suggestions" id="suggestions"></div>
+    </div>
+
+    <section class="products flex">
+      <!-- Product cards with updated prices -->
+      <article class="card">
+        <a href="/pages/product-details.html">
+          <img width="266" src="./images/1.png" alt="" />
+        </a>
+        <div class="content" style="width: 266px">
+          <h1 class="title">Product Title</h1>
+          <p class="description">
+            Lorem ipsum dolor sit amet consectetur elit adipisicing . Ex tempore dolor
+            in, accusantium laudantium accusamus.
+          </p>
+          <div class="flex" style="justify-content: space-between; padding-bottom: 0.7rem">
+            <div class="price">$150</div>
+            <button class="add-to-cart flex">
+              <i class="fa-solid fa-cart-plus"></i>
+              Add To Cart
+            </button>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/pages/product-details.html">
+          <img width="266" src="./images/2.webp" alt="" />
+        </a>
+        <div class="content" style="width: 266px">
+          <h1 class="title">Product Title</h1>
+          <p class="description">
+            Lorem ipsum dolor sit amet consectetur elit adipisicing . Ex tempore dolor
+            in, accusantium laudantium accusamus.
+          </p>
+          <div class="flex" style="justify-content: space-between; padding-bottom: 0.7rem">
+            <div class="price">$80</div>
+            <button class="add-to-cart flex">
+              <i class="fa-solid fa-cart-plus"></i>
+              Add To Cart
+            </button>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/pages/product-details.html">
+          <img width="266" src="./images/3.webp" alt="" />
+        </a>
+        <div class="content" style="width: 266px">
+          <h1 class="title">Product Title</h1>
+          <p class="description">
+            Lorem ipsum dolor sit amet consectetur elit adipisicing . Ex tempore dolor
+            in, accusantium laudantium accusamus.
+          </p>
+          <div class="flex" style="justify-content: space-between; padding-bottom: 0.7rem">
+            <div class="price">$120</div>
+            <button class="add-to-cart flex">
+              <i class="fa-solid fa-cart-plus"></i>
+              Add To Cart
+            </button>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/pages/product-details.html">
+          <img width="266" src="./images/4.webp" alt="" />
+        </a>
+        <div class="content" style="width: 266px">
+          <h1 class="title">Product Title</h1>
+          <p class="description">
+            Lorem ipsum dolor sit amet consectetur elit adipisicing . Ex tempore dolor
+            in, accusantium laudantium accusamus.
+          </p>
+          <div class="flex" style="justify-content: space-between; padding-bottom: 0.7rem">
+            <div class="price">$200</div>
+            <button class="add-to-cart flex">
+              <i class="fa-solid fa-cart-plus"></i>
+              Add To Cart
+            </button>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/pages/product-details.html">
+          <img width="266" src="./images/5.webp" alt="" />
+        </a>
+        <div class="content" style="width: 266px">
+          <h1 class="title">Product Title</h1>
+          <p class="description">
+            Lorem ipsum dolor sit amet consectetur elit adipisicing . Ex tempore dolor
+            in, accusantium laudantium accusamus.
+          </p>
+          <div class="flex" style="justify-content: space-between; padding-bottom: 0.7rem">
+            <div class="price">$50</div>
+            <button class="add-to-cart flex">
+              <i class="fa-solid fa-cart-plus"></i>
+              Add To Cart
+            </button>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/pages/product-details.html">
+          <img width="266" src="./images/6.webp" alt="" />
+        </a>
+        <div class="content" style="width: 266px">
+          <h1 class="title">Product Title</h1>
+          <p class="description">
+            Lorem ipsum dolor sit amet consectetur elit adipisicing . Ex tempore dolor
+            in, accusantium laudantium accusamus.
+          </p>
+          <div class="flex" style="justify-content: space-between; padding-bottom: 0.7rem">
+            <div class="price">$170</div>
+            <button class="add-to-cart flex">
+              <i class="fa-solid fa-cart-plus"></i>
+              Add To Cart
+            </button>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/pages/product-details.html">
+          <img width="266" src="./images/7.webp" alt="" />
+        </a>
+        <div class="content" style="width: 266px">
+          <h1 class="title">Product Title</h1>
+          <p class="description">
+            Lorem ipsum dolor sit amet consectetur elit adipisicing . Ex tempore dolor
+            in, accusantium laudantium accusamus.
+          </p>
+          <div class="flex" style="justify-content: space-between; padding-bottom: 0.7rem">
+            <div class="price">$90</div>
+            <button class="add-to-cart flex">
+              <i class="fa-solid fa-cart-plus"></i>
+              Add To Cart
+            </button>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <a href="/pages/product-details.html">
+          <img width="266" src="./images/8.png" alt="" />
+        </a>
+        <div class="content" style="width: 266px">
+          <h1 class="title">Product Title</h1>
+          <p class="description">
+            Lorem ipsum dolor sit amet consectetur elit adipisicing . Ex tempore dolor
+            in, accusantium laudantium accusamus.
+          </p>
+          <div class="flex" style="justify-content: space-between; padding-bottom: 0.7rem">
+            <div class="price">$130</div>
+            <button class="add-to-cart flex">
+              <i class="fa-solid fa-cart-plus"></i>
+              Add To Cart
+            </button>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    Designed and developer by
+    <span> Ahmed sobhi mokhtar </span> © 2024.
+  </footer>
+
+  <script>
+    const products = [
+      { title: "Product 1", price: 150 },
+      { title: "Product 2", price: 80 },
+      { title: "Product 3", price: 120 },
+      { title: "Product 4", price: 200 },
+      { title: "Product 5", price: 50 },
+      { title: "Product 6", price: 170 },
+      { title: "Product 7", price: 90 },
+      { title: "Product 8", price: 130 },
+    ];
+
+    const budgetInput = document.getElementById("budgetInput");
+    const suggestButton = document.getElementById("suggestButton");
+    const suggestionsDiv = document.getElementById("suggestions");
+
+    suggestButton.addEventListener("click", () => {
+      const budget = Number(budgetInput.value);
+      if (isNaN(budget) || budget <= 0) {
+        suggestionsDiv.innerHTML = "<strong>Please enter a valid budget!</strong>";
+        return;
+      }
+      // Filter products with price <= budget
+      const filtered = products.filter((p) => p.price <= budget);
+
+      if (filtered.length === 0) {
+        suggestionsDiv.innerHTML = "<strong>No products found for this budget.</strong>";
+        return;
+      }
+
+      // Show suggestions
+      let html = "<strong>Suggested Products:</strong><ul>";
+      filtered.forEach((p) => {
+        html += `<li>${p.title} - $${p.price}</li>`;
+      });
+      html += "</ul>";
+      suggestionsDiv.innerHTML = html;
+
+      // Scroll suggestions into view
+      suggestionsDiv.scrollIntoView({ behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>
